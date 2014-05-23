@@ -85,12 +85,6 @@ public class DeviantARTSource extends RemoteMuzeiArtSource{
         ROTATE_TIME_MILLIS = refreshtime * 60 * 1000;
         try {
             if (wifionly && !isWifiConnected(this)) {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(getApplicationContext(), "No WiFi connection available.", Toast.LENGTH_SHORT).show();
-                    }
-                });
                 scheduleUpdate(System.currentTimeMillis() + ROTATE_TIME_MILLIS);
                 return;
             }
