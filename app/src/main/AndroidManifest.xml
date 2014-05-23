@@ -33,7 +33,7 @@
         <activity
             android:name="com.stuffsels.muzei.deviantart.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:theme="@android:style/Theme.Holo.Wallpaper.NoTitleBar"
+            android:theme="@android:style/Theme.Holo"
             android:exported="true">
         </activity>
     </application>

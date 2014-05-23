@@ -26,7 +26,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(this);
 
@@ -36,7 +35,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 fragment).commit();
     }
-
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         PreferenceHelper.updateSummaries(fragment, sharedPreferences, key);
