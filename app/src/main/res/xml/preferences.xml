@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:key="pref_query"
+        android:title="@string/pref_query_name"
+        android:defaultValue="in:photography" />
+    <com.stuffsels.muzei.deviantart.EditIntPreference
+            android:key="pref_refreshtime"
+            android:title="@string/pref_refreshtime_name"
+            android:numeric="integer"
+            android:inputType="number"
+            android:hint="180"
+            android:defaultValue="180" />
+    <com.stuffsels.muzei.deviantart.EditIntPreference
+            android:key="pref_nrofdeviations"
+            android:title="@string/pref_nrofdeviations_name"
+            android:numeric="integer"
+            android:inputType="number"
+            android:hint="30"
+            android:defaultValue="30" />
+    <CheckBoxPreference
+        android:key="pref_nfsw"
+        android:title="@string/pref_nfsw_name"
+        android:defaultValue="false" />
+    <CheckBoxPreference
+        android:key="pref_wifionly"
+        android:title="@string/pref_wifionly_name"
+        android:defaultValue="true" />
+
+</PreferenceScreen>
