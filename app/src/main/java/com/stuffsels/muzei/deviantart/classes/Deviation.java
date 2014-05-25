@@ -9,4 +9,6 @@ public class Deviation {
     public String imageUrl;
     public String medium;
     public String rating;
+    public String category;
+    public String featuredBy;
 }

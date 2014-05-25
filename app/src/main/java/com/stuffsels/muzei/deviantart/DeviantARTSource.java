@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.apps.muzei.api.Artwork;
 import com.google.android.apps.muzei.api.RemoteMuzeiArtSource;
 import com.stuffsels.muzei.deviantart.classes.Deviation;
+import com.stuffsels.muzei.deviantart.helpers.DeviantArtDDParser;
 import com.stuffsels.muzei.deviantart.helpers.DeviantArtRssParser;
 import com.stuffsels.muzei.deviantart.helpers.PreferenceHelper;
 import org.xmlpull.v1.XmlPullParserException;
@@ -78,6 +79,7 @@ public class DeviantARTSource extends RemoteMuzeiArtSource{
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         PreferenceHelper prefs = new PreferenceHelper(sharedPref);
         String query = prefs.getQuery();
+        String mode = prefs.getMode();
         Boolean nfsw = prefs.getNfsw();
         Boolean wifionly = prefs.getWifiOnly();
         Integer refreshtime = prefs.getRefreshTime();
@@ -94,15 +96,24 @@ public class DeviantARTSource extends RemoteMuzeiArtSource{
         }
 
         String currentToken = (getCurrentArtwork() != null) ? getCurrentArtwork().getToken() : null;
-
-        DeviantArtRssParser parser = new DeviantArtRssParser(query, deviationCount, nfsw);
-        try {
-            deviations = parser.getDeviations();
-        } catch (XmlPullParserException e) {
-            throw new RetryException();
-        } catch (IOException e) {
-            throw new RetryException();
+        if (mode.equals("search")) {
+            DeviantArtRssParser parser = new DeviantArtRssParser(query, deviationCount, nfsw);
+            try {
+                deviations = parser.getDeviations();
+            } catch (XmlPullParserException e) {
+                throw new RetryException();
+            } catch (IOException e) {
+                throw new RetryException();
+            }
+        } else if (mode.equals("dd")) {
+            DeviantArtDDParser parser = new DeviantArtDDParser(nfsw);
+            try {
+                deviations = parser.getDeviations();
+            } catch (IOException e) {
+                throw new RetryException();
+            }
         }
+
         if (deviations == null || deviations.size() == 0) {
             scheduleUpdate(System.currentTimeMillis() + ROTATE_TIME_MILLIS);
             return;
