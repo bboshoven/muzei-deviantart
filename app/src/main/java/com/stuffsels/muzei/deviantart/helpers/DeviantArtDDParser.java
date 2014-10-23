@@ -20,8 +20,8 @@ public class DeviantArtDDParser {
     }
 
     public List<Deviation> getDeviations() throws IOException {
-        Document doc = Jsoup.connect("http://today.deviantart.com/dds/").get();
-        Elements thumbs = doc.select("#ddtable td");
+        Document doc = Jsoup.connect("http://www.deviantart.com/dailydeviations/").get();
+        Elements thumbs = doc.select(".ddtable td");
         for (Element thumb : thumbs)
         {
             Deviation deviation = getDeviation(thumb);
