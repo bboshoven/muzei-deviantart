@@ -35,3 +35,4 @@ local.properties
 cache.xml
 gradle-wrapper*
 gradlew*
+*.bin
