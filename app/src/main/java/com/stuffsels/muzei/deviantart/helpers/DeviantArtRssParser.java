@@ -98,16 +98,6 @@ public class DeviantArtRssParser {
         }
     }
 
-    private Boolean isImage(String url)
-    {
-        if (url == null) { return false; }
-        //Documentation: Sets the artwork's image URI, which must resolve to a JPEG or PNG image, ideally under 5MB.
-        if (url.endsWith("jpg") || url.endsWith("jpeg") || url.endsWith("png")) {
-            return true;
-        }
-        return false;
-    }
-
     private Deviation readItem(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, null, "item");
         Deviation deviation = new Deviation();
@@ -127,7 +117,7 @@ public class DeviantArtRssParser {
                 if (deviation.medium == null) {
                     deviation.medium = readAttribute(parser, ns, "medium");
                     if (deviation.medium == null && deviation.imageUrl != null) { //RSS feed does not seem to always return a medium
-                        if (isImage(deviation.imageUrl)) {
+                        if (UrlHelper.isImage(deviation.imageUrl)) {
                             deviation.medium = "image";
                         }
                     }
@@ -146,7 +136,7 @@ public class DeviantArtRssParser {
                 skip(parser);
             }
         }
-        if (deviation.imageUrl == null || !isImage(deviation.imageUrl)) {
+        if (deviation.imageUrl == null || !UrlHelper.isImage(deviation.imageUrl)) {
             return null;
         }
         return deviation;

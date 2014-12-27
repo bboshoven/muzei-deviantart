@@ -28,7 +28,7 @@
             android:defaultValue="true" />
     </PreferenceCategory>
     <PreferenceCategory
-            android:key="button_search_model"
+            android:key="button_search_mode"
             android:title="@string/search_mode_settings">
         <EditTextPreference
                 android:key="pref_query"
@@ -41,5 +41,17 @@
                 android:inputType="number"
                 android:hint="30"
                 android:defaultValue="30" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="button_favorite_mode"
+        android:title="@string/favorite_mode_settings">
+        <EditTextPreference
+            android:key="pref_username"
+            android:title="@string/pref_username"
+            android:defaultValue="" />
+        <EditTextPreference
+            android:key="pref_collectionname"
+            android:title="@string/pref_collectionName"
+            android:defaultValue="Muzei" />
     </PreferenceCategory>
 </PreferenceScreen>

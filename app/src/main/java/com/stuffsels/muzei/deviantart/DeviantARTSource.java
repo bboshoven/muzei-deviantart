@@ -15,6 +15,7 @@ import com.google.android.apps.muzei.api.Artwork;
 import com.google.android.apps.muzei.api.RemoteMuzeiArtSource;
 import com.stuffsels.muzei.deviantart.classes.Deviation;
 import com.stuffsels.muzei.deviantart.helpers.DeviantArtDDParser;
+import com.stuffsels.muzei.deviantart.helpers.DeviantArtFavoriteParser;
 import com.stuffsels.muzei.deviantart.helpers.DeviantArtRssParser;
 import com.stuffsels.muzei.deviantart.helpers.PreferenceHelper;
 import org.xmlpull.v1.XmlPullParserException;
@@ -80,6 +81,8 @@ public class DeviantARTSource extends RemoteMuzeiArtSource{
         PreferenceHelper prefs = new PreferenceHelper(sharedPref);
         String query = prefs.getQuery();
         String mode = prefs.getMode();
+        String userName = prefs.getUsername();
+        String collectionName = prefs.getCollectionName();
         Boolean nfsw = prefs.getNfsw();
         Boolean wifionly = prefs.getWifiOnly();
         Integer refreshtime = prefs.getRefreshTime();
@@ -90,9 +93,18 @@ public class DeviantARTSource extends RemoteMuzeiArtSource{
                 scheduleUpdate(System.currentTimeMillis() + ROTATE_TIME_MILLIS);
                 return;
             }
-        } catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             return;
+        }
+
+        if (mode.equals("favorite") && userName.equals("")) {
+            mode = "dd";
+            handler.post(new Runnable() {
+                 @Override
+                 public void run() {
+                         Toast.makeText(getApplicationContext(), "No username for favourite mode, switching to Daily Deviation mode", Toast.LENGTH_LONG).show();
+                     }
+             });
         }
 
         String currentToken = (getCurrentArtwork() != null) ? getCurrentArtwork().getToken() : null;
@@ -107,6 +119,13 @@ public class DeviantARTSource extends RemoteMuzeiArtSource{
             }
         } else if (mode.equals("dd")) {
             DeviantArtDDParser parser = new DeviantArtDDParser(nfsw);
+            try {
+                deviations = parser.getDeviations();
+            } catch (IOException e) {
+                throw new RetryException();
+            }
+        } else if (mode.equals("favorite")) {
+            DeviantArtFavoriteParser parser = new DeviantArtFavoriteParser(nfsw, userName, collectionName);
             try {
                 deviations = parser.getDeviations();
             } catch (IOException e) {

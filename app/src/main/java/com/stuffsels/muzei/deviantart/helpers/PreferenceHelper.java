@@ -12,6 +12,8 @@ public class PreferenceHelper {
     public static final String PREF_REFRESHTIME = "pref_refreshtime";
     public static final String PREF_NROFDEVIATIONS = "pref_nrofdeviations";
     public static final String PREF_MODE = "pref_mode";
+    public static final String PREF_COLLECTION_NAME = "pref_collectionname";
+    public static final String PREF_USERNAME = "pref_username";
 
     private SharedPreferences preferences;
     public PreferenceHelper(SharedPreferences prefs){
@@ -32,6 +34,14 @@ public class PreferenceHelper {
 
     public Boolean getWifiOnly() {
         return preferences.getBoolean(PREF_WIFIONLY, true);
+    }
+
+    public String getUsername() {
+        return preferences.getString(PREF_USERNAME, "");
+    }
+
+    public String getCollectionName() {
+        return preferences.getString(PREF_COLLECTION_NAME, "Muzei");
     }
 
     public Boolean getNfsw() {
@@ -87,6 +97,16 @@ public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, Strin
             Preference pref = fragment.findPreference(PreferenceHelper.PREF_QUERY);
             if (pref!= null)
                 pref.setSummary(helper.getQuery());
+        }
+        if (key == null || key.equals(PreferenceHelper.PREF_USERNAME)) {
+            Preference pref = fragment.findPreference(PreferenceHelper.PREF_USERNAME);
+            if (pref!= null)
+                pref.setSummary(helper.getUsername());
+        }
+        if (key == null || key.equals(PreferenceHelper.PREF_COLLECTION_NAME)) {
+            Preference pref = fragment.findPreference(PreferenceHelper.PREF_COLLECTION_NAME);
+            if (pref!= null)
+                pref.setSummary(helper.getCollectionName());
         }
     }
 

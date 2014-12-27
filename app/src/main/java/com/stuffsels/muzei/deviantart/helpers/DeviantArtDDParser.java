@@ -22,8 +22,7 @@ public class DeviantArtDDParser {
     public List<Deviation> getDeviations() throws IOException {
         Document doc = Jsoup.connect("http://www.deviantart.com/dailydeviations/").get();
         Elements thumbs = doc.select(".ddtable td");
-        for (Element thumb : thumbs)
-        {
+        for (Element thumb : thumbs) {
             Deviation deviation = getDeviation(thumb);
             if (deviation != null //deviation should not be null
                     && deviation.medium.equals("image") //deviation should be an image
@@ -47,19 +46,9 @@ public class DeviantArtDDParser {
         deviation.guid = deviation.link;
         deviation.imageUrl = link.attr("data-super-full-img");
         deviation.rating = link.hasClass("ismature") ? "adult" : "nonadult";
-        deviation.medium = isImage(deviation.imageUrl) ? "image" : "unknown";
+        deviation.medium = UrlHelper.isImage(deviation.imageUrl) ? "image" : "unknown";
         deviation.featuredBy = featuredBySpan.text();
         return deviation;
-    }
-
-    private Boolean isImage(String url)
-    {
-        if (url == null) { return false; }
-        //Documentation: Sets the artwork's image URI, which must resolve to a JPEG or PNG image, ideally under 5MB.
-        if (url.endsWith("jpg") || url.endsWith("jpeg") || url.endsWith("png")) {
-            return true;
-        }
-        return false;
     }
 
 }

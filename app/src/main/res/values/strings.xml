@@ -6,6 +6,9 @@
     <string name="source_description">Images from deviantART</string>
     <string name="title_activity_settings">Settings</string>
     <string name="search_mode_settings">Search mode</string>
+    <string name="favorite_mode_settings">Favourite mode</string>
+    <string name="pref_username">Username</string>
+    <string name="pref_collectionName">Collection-name</string>
     <string name="pref_query_name">Search query</string>
     <string name="pref_nfsw_name">Show nfsw (adult) content</string>
     <string name="pref_wifionly_name">Only download images on WiFi</string>
@@ -17,10 +20,12 @@
     <string-array name="prefs_mode_values">
         <item>search</item>
         <item>dd</item>
+        <item>favorite</item>
     </string-array>
     <string-array name="prefs_mode_entries">
         <item>Search</item>
         <item>Daily Deviations</item>
+        <item>Favourite</item>
     </string-array>
     <string name="prefs_mode_values_default">search</string>
 
